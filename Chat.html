@@ -1,12 +1,89 @@
 <apex:page >
-	
+
     <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
-	var initESW = function (gslbBaseURL) {
+	var initESW = function (gslbBaseURL, membercode, language, brandmarket, matchstartdate, betslipid, nps) {
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.language = language; //For example, enter 'en' or 'en-US'
         embedded_svc.settings.waitingStateBackgroundImgURL = '';
-       
+        var buttonID = '';
+        var agentName = '';
+        var onlineAgent = '';
+        var offlineAgent = '';
+        var disableAgent = '';
+        var loading = '';
+        var enNonVipButton = "5732v000000ceen";
+        var enVipButton = "5732v000000ceeo";
+        var cnNonVipButton = "5732v000000ceel";
+        var cnVipButton = "5732v000000ceem";
+        var thNonVipButton = "5732v000000ceer";
+        var thVipButton = "5732v000000cees";
+        var idNonVipButton = "5732v000000ceep";
+        var idVipButton = "5732v000000ceeq";
+        var viNonVipButton = "5732v000000ceet";
+        var viVipButton = "5732v000000ceeu";
+
+        if (brandmarket == 'FUN88-CNY') {
+            agentName = 'FUN88CNYChat';
+            onlineAgent = '开始聊天';
+            offlineAgent = '联系我们';
+            disableAgent = '客服忙线中';
+            loading = '加载中';
+            if (language.toLowerCase().indexOf('zh') !== -1) {
+                buttonID = cnVipButton;
+            } else if (language.toLowerCase().indexOf('en') !== -1) {
+                buttonID = cnVipButton;
+                onlineAgent = 'Chat with an Expert';
+                offlineAgent = 'Contact Us';
+                disableAgent = 'Agent Offline';
+                loading = 'Loading...';
+            }
+        } else if (brandmarket == 'FUN88-THB') {
+            agentName = 'FUN88THBChat';
+            onlineAgent = '​เริ่มแชท';
+            offlineAgent = 'ติดต่อเรา';
+            disableAgent = 'ตัวแทนออฟไลน์';
+            loading = 'โหลด';
+            if (language.toLowerCase().indexOf('th') !== -1) {
+                buttonID = thVipButton;
+            } else if (language.toLowerCase().indexOf('en') !== -1) {
+                buttonID = thVipButton;
+                onlineAgent = 'Chat with an Expert';
+                offlineAgent = 'Contact Us';
+                disableAgent = 'Agent Offline';
+                loading = 'Loading...';
+            }
+        } else if (brandmarket == 'FUN88-IDR') {
+            agentName = 'FUN88IDRChat';
+            onlineAgent = 'CS Online';
+            offlineAgent = 'CS Offline';
+            disableAgent = 'CS Offline';
+            loading = 'Memuat';
+            if (language.toLowerCase().indexOf('id') !== -1) {
+                buttonID = idVipButton;
+            } else if (language.toLowerCase().indexOf('en') !== -1) {
+                buttonID = idVipButton;
+                onlineAgent = 'Chat with an Expert';
+                offlineAgent = 'Contact Us';
+                disableAgent = 'Agent Offline';
+                loading = 'Loading...';
+            }
+        } else if (brandmarket == 'FUN88-VND') {
+            agentName = 'FUN88VNDChat';
+            onlineAgent = 'Bắt Đầu Hỗ Trợ';
+            offlineAgent = 'Liên Hệ Chúng Tôi';
+            disableAgent = 'Hỗ Trợ Ngoại Tuyến';
+            loading = 'Đang Tải';
+            if (language.toLowerCase().indexOf('vi') !== -1) {
+                buttonID = viVipButton;
+            } else if (language.toLowerCase().indexOf('en') !== -1) {
+                buttonID = viVipButton;
+                onlineAgent = 'Chat with an Expert';
+                offlineAgent = 'Contact Us';
+                disableAgent = 'Agent Offline';
+                loading = 'Loading...';
+            }
+        }
 
         embedded_svc.settings.prepopulatedPrechatFields = {
             Member_Code__c: membercode,
@@ -114,7 +191,51 @@
         //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
 
         // Settings for Chat		
-        
+        embedded_svc.settings.directToButtonRouting = function (prechatFormData) {
+            //Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+            //Returns a valid button ID.   
+
+            // 0: First Name
+            // 1: Last Name
+            var preChatFormIsVip = prechatFormData[2].value; // Title
+            var preChatFormBrandmarket = prechatFormData[3].value; // Department
+            // 4: Member code Brand market
+            var preChatFormMemberCode = prechatFormData[5].value; // LastName (But keep Member code)
+            // 6: Brand Market
+            console.log('Lang: ' + (language || 'undefined') + ', MemberCode: ' + (preChatFormMemberCode || 'undefined') + ', isVip: ' + (preChatFormIsVip || 'undefined'));
+
+            if (isValidBrandMarket(preChatFormBrandmarket) && language.toLowerCase().includes('en')) {
+                buttonID = selectButton(enNonVipButton, enVipButton);
+            } else if (preChatFormBrandmarket == 'FUN88-CNY' && language.toLowerCase().includes('zh')) {
+                buttonID = selectButton(cnNonVipButton, cnVipButton);
+            } else if (preChatFormBrandmarket == 'FUN88-THB' && language.toLowerCase().includes('th')) {
+                buttonID = selectButton(thNonVipButton, thVipButton);
+            } else if (preChatFormBrandmarket == 'FUN88-IDR' && language.toLowerCase().includes('id')) {
+                buttonID = selectButton(idNonVipButton, idVipButton);
+            } else if (preChatFormBrandmarket == 'FUN88-VND' && language.toLowerCase().includes('vi')) {
+                buttonID = selectButton(viNonVipButton, viVipButton);
+            } else {
+                console.log("Cannot find a button - not supported Lang or Brand market");
+            }
+            return buttonID;
+
+            function isValidBrandMarket() {
+                return ['FUN88-CNY', 'FUN88-THB', 'FUN88-IDR', 'FUN88-VND'].indexOf(preChatFormBrandmarket) > -1;
+            }
+
+            function selectButton(nonVipButton, vipButton) {
+                if (preChatFormMemberCode != "" &&
+                    preChatFormMemberCode != undefined &&
+                    preChatFormIsVip == true) {
+                    console.log("Select VIP button !!!");
+                    return vipButton;
+                }
+
+                console.log("Select NON-VIP button");
+                return nonVipButton;
+            }
+        };
+
         //Sets the auto-population of pre-chat form fields
         embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
         //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
