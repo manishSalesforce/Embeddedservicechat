@@ -1,249 +1,39 @@
 <apex:page >
+	<style type='text/css'>
+	.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #005290;
+		font-family: "Arial", sans-serif;
+	}
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: 1px solid #005290;
+	}
+</style>
 
-    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
-	var initESW = function (gslbBaseURL) {
-        embedded_svc.settings.displayHelpButton = true; //Or false
-        embedded_svc.settings.language = language; //For example, enter 'en' or 'en-US'
-        embedded_svc.settings.waitingStateBackgroundImgURL = '';
-        var buttonID = '';
-        var agentName = '';
-        var onlineAgent = '';
-        var offlineAgent = '';
-        var disableAgent = '';
-        var loading = '';
-        var enNonVipButton = "5732v000000ceen";
-        var enVipButton = "5732v000000ceeo";
-        var cnNonVipButton = "5732v000000ceel";
-        var cnVipButton = "5732v000000ceem";
-        var thNonVipButton = "5732v000000ceer";
-        var thVipButton = "5732v000000cees";
-        var idNonVipButton = "5732v000000ceep";
-        var idVipButton = "5732v000000ceeq";
-        var viNonVipButton = "5732v000000ceet";
-        var viVipButton = "5732v000000ceeu";
+	var initESW = function(gslbBaseURL) {
+		embedded_svc.settings.displayHelpButton = true; //Or false
+		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 
-        if (brandmarket == 'FUN88-CNY') {
-            agentName = 'FUN88CNYChat';
-            onlineAgent = '开始聊天';
-            offlineAgent = '联系我们';
-            disableAgent = '客服忙线中';
-            loading = '加载中';
-            if (language.toLowerCase().indexOf('zh') !== -1) {
-                buttonID = cnVipButton;
-            } else if (language.toLowerCase().indexOf('en') !== -1) {
-                buttonID = cnVipButton;
-                onlineAgent = 'Chat with an Expert';
-                offlineAgent = 'Contact Us';
-                disableAgent = 'Agent Offline';
-                loading = 'Loading...';
-            }
-        } else if (brandmarket == 'FUN88-THB') {
-            agentName = 'FUN88THBChat';
-            onlineAgent = '​เริ่มแชท';
-            offlineAgent = 'ติดต่อเรา';
-            disableAgent = 'ตัวแทนออฟไลน์';
-            loading = 'โหลด';
-            if (language.toLowerCase().indexOf('th') !== -1) {
-                buttonID = thVipButton;
-            } else if (language.toLowerCase().indexOf('en') !== -1) {
-                buttonID = thVipButton;
-                onlineAgent = 'Chat with an Expert';
-                offlineAgent = 'Contact Us';
-                disableAgent = 'Agent Offline';
-                loading = 'Loading...';
-            }
-        } else if (brandmarket == 'FUN88-IDR') {
-            agentName = 'FUN88IDRChat';
-            onlineAgent = 'CS Online';
-            offlineAgent = 'CS Offline';
-            disableAgent = 'CS Offline';
-            loading = 'Memuat';
-            if (language.toLowerCase().indexOf('id') !== -1) {
-                buttonID = idVipButton;
-            } else if (language.toLowerCase().indexOf('en') !== -1) {
-                buttonID = idVipButton;
-                onlineAgent = 'Chat with an Expert';
-                offlineAgent = 'Contact Us';
-                disableAgent = 'Agent Offline';
-                loading = 'Loading...';
-            }
-        } else if (brandmarket == 'FUN88-VND') {
-            agentName = 'FUN88VNDChat';
-            onlineAgent = 'Bắt Đầu Hỗ Trợ';
-            offlineAgent = 'Liên Hệ Chúng Tôi';
-            disableAgent = 'Hỗ Trợ Ngoại Tuyến';
-            loading = 'Đang Tải';
-            if (language.toLowerCase().indexOf('vi') !== -1) {
-                buttonID = viVipButton;
-            } else if (language.toLowerCase().indexOf('en') !== -1) {
-                buttonID = viVipButton;
-                onlineAgent = 'Chat with an Expert';
-                offlineAgent = 'Contact Us';
-                disableAgent = 'Agent Offline';
-                loading = 'Loading...';
-            }
-        }
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
 
-        embedded_svc.settings.prepopulatedPrechatFields = {
-            Member_Code__c: '123',
-            Department: brandmarket,
-			Language: language
-        };
+		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
 
-        embedded_svc.settings.extraPrechatFormDetails = [{
-                "label": "Brand Market",
-                "value": brandmarket,
-                "transcriptFields": ["Brand_Market__c"],
-                "displayToAgent": true
-            },
-            {
-                "label": "Member Code",
-                "transcriptFields": ["Member_Code__c"],
-                "displayToAgent": true
-            },
-            {
-                "label": "Match Start Date Time",
-                "value": matchstartdate,
-                "transcriptFields": ["Match_Start_Date_Time__c"],
-                "displayToAgent": true
-            },
-            {
-                "label": "Betslip ID",
-                "value": betslipid,
-                "transcriptFields": ["Betslip_ID__c"],
-                "displayToAgent": true
-            },
-            {
-               "label": "Nps Requires",
-               "value": nps,
-               "displayToAgent": true,
-               "transcriptFields": ["Nps_Requires__c"]
-            }
-        ];
+		// Settings for Chat
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
 
-        embedded_svc.settings.extraPrechatInfo = [{
-                "entityName": "Contact",
-                "entityFieldMaps": [{
-                        "isExactMatch": false,
-                        "fieldName": "LastName",
-                        "doCreate": false,
-                        "doFind": false,
-                        "label": "Member Code"
-                    },
-                    {
-                        "isExactMatch": false,
-                        "fieldName": "FirstName",
-                        "doCreate": false,
-                        "doFind": false,
-                        "label": "First Name"
-                    },
-                    {
-                        "isExactMatch": false,
-                        "fieldName": "Department",
-                        "doCreate": false,
-                        "doFind": false,
-                        "label": "Department"
-                    },
-                    {
-                        "isExactMatch": false,
-                        "fieldName": "Title",
-                        "doCreate": false,
-                        "doFind": false,
-                        "label": "Title"
-                    },
-                    {
-                        "isExactMatch": true,
-                        "fieldName": "Member_Code_Brand_Market__c",
-                        "doCreate": false,
-                        "doFind": true,
-                        "label": "Member Code Brand Market"
-                    }
-                ]
-            },
-            {
-                "entityName": "Account",
-                "entityFieldMaps": [{
-                    "isExactMatch": false,
-                    "fieldName": "LastName",
-                    "doCreate": false,
-                    "doFind": false,
-                    "label": "Member Code"
-                }]
-            },
-            {
-                "entityName": "Case",
-                "saveToTranscript": "CaseId",
-                "entityFieldMaps": [{
-                    "isExactMatch": false,
-                    "fieldName": "Member_Code__c",
-                    "doCreate": false,
-                    "doFind": false,
-                    "label": "Member Code"
-                }]
-            }
-        ];
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
 
-        embedded_svc.settings.defaultMinimizedText = onlineAgent; //(Defaults to Chat with an Expert)
-        embedded_svc.settings.offlineSupportMinimizedText = offlineAgent; //(Defaults to Contact Us)
-        embedded_svc.settings.disabledMinimizedText = disableAgent; //(Defaults to Agent Offline)
-        embedded_svc.settings.loadingText = loading; //(Defaults to Loading)
-        //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
-
-        // Settings for Chat		
-        embedded_svc.settings.directToButtonRouting = function (prechatFormData) {
-            //Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
-            //Returns a valid button ID.   
-
-            // 0: First Name
-            // 1: Last Name
-            var preChatFormIsVip = prechatFormData[2].value; // Title
-            var preChatFormBrandmarket = prechatFormData[3].value; // Department
-            // 4: Member code Brand market
-            var preChatFormMemberCode = prechatFormData[5].value; // LastName (But keep Member code)
-            // 6: Brand Market
-            console.log('Lang: ' + (language || 'undefined') + ', MemberCode: ' + (preChatFormMemberCode || 'undefined') + ', isVip: ' + (preChatFormIsVip || 'undefined'));
-
-            if (isValidBrandMarket(preChatFormBrandmarket) && language.toLowerCase().includes('en')) {
-                buttonID = selectButton(enNonVipButton, enVipButton);
-            } else if (preChatFormBrandmarket == 'FUN88-CNY' && language.toLowerCase().includes('zh')) {
-                buttonID = selectButton(cnNonVipButton, cnVipButton);
-            } else if (preChatFormBrandmarket == 'FUN88-THB' && language.toLowerCase().includes('th')) {
-                buttonID = selectButton(thNonVipButton, thVipButton);
-            } else if (preChatFormBrandmarket == 'FUN88-IDR' && language.toLowerCase().includes('id')) {
-                buttonID = selectButton(idNonVipButton, idVipButton);
-            } else if (preChatFormBrandmarket == 'FUN88-VND' && language.toLowerCase().includes('vi')) {
-                buttonID = selectButton(viNonVipButton, viVipButton);
-            } else {
-                console.log("Cannot find a button - not supported Lang or Brand market");
-            }
-            return buttonID;
-
-            function isValidBrandMarket() {
-                return ['FUN88-CNY', 'FUN88-THB', 'FUN88-IDR', 'FUN88-VND'].indexOf(preChatFormBrandmarket) > -1;
-            }
-
-            function selectButton(nonVipButton, vipButton) {
-                if (preChatFormMemberCode != "" &&
-                    preChatFormMemberCode != undefined &&
-                    preChatFormIsVip == true) {
-                    console.log("Select VIP button !!!");
-                    return vipButton;
-                }
-
-                console.log("Select NON-VIP button");
-                return nonVipButton;
-            }
-        };
-
-        //Sets the auto-population of pre-chat form fields
-        embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
-        //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
-
-        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-        embedded_svc.settings.entryFeature = 'LiveAgent';
-
-        embedded_svc.init(
+		embedded_svc.init(
 			'https://omniverse--steindev.sandbox.my.salesforce.com',
 			'https://omniverse--steindev.sandbox.my.site.com/gicustomers',
 			gslbBaseURL,
@@ -258,7 +48,8 @@
 				isOfflineSupportEnabled: false
 			}
 		);
-    };
+	};
+
 	if (!window.embedded_svc) {
 		var s = document.createElement('script');
 		s.setAttribute('src', 'https://omniverse--steindev.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
@@ -269,7 +60,5 @@
 	} else {
 		initESW('https://service.force.com');
 	}
-	
-
 </script>
 </apex:page>
