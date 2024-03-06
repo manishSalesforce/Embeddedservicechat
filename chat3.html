@@ -88,7 +88,8 @@
         var idVipButton = "5732v000000ceeq";
         var viNonVipButton = "5732v000000ceet";
         var viVipButton = "5732v000000ceeu";
-
+	var chatInitiated = false;
+        var queued = false;
         if (brandmarket == 'FUN88-CNY') {
             agentName = 'FUN88CNYChat';
             onlineAgent = '开始聊天';
@@ -250,7 +251,15 @@
                 }]
             }
         ];
-
+	embedded_svc.addEventHandler("onQueueUpdate", function (data) {
+	    console.log("onQueueUpdate event was fired. queuePosition was " + data.queuePosition);
+	    queued = data.queuePosition >= 0;
+	    
+	});
+	embedded_svc.addEventHandler("afterDestroy", function (data) {
+	    console.log("afterDestroy event was fired."+queued);
+	    
+	});
         embedded_svc.settings.defaultMinimizedText = onlineAgent; //(Defaults to Chat with an Expert)
         embedded_svc.settings.offlineSupportMinimizedText = offlineAgent; //(Defaults to Contact Us)
         embedded_svc.settings.disabledMinimizedText = disableAgent; //(Defaults to Agent Offline)
