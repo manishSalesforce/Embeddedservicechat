@@ -274,7 +274,7 @@
                 embedded_svc.addEventHandler("onQueueUpdate", function (data) {
                     console.log("onQueueUpdate event was fired. queuePosition was " + data.queuePosition);
                     queued = data.queuePosition >= 0;
-                    switchBackground();
+                   // switchBackground();
                 });
                 embedded_svc.addEventHandler("afterDestroy", function (data) {
                     console.log("afterDestroy event was fired.");
