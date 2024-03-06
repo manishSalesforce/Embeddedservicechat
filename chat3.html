@@ -64,6 +64,7 @@
     </script>
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
+	
 	var initESW = function (gslbBaseURL, membercode, language, brandmarket, matchstartdate, betslipid, nps) {
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.language = language; //For example, enter 'en' or 'en-US'
@@ -255,7 +256,45 @@
         embedded_svc.settings.loadingText = loading; //(Defaults to Loading)
         //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
 
-        // Settings for Chat		
+        // Settings for Chat	
+		embedded_svc.addEventHandler("onChatEstablished", function (data) {
+                    console.log("onChatEstablished event was fired.");
+                    chatInitiated = true;
+                });
+                embedded_svc.addEventHandler("onChatConferenceEnded", function (data) {
+                    console.log("onChatConferenceEnded event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                embedded_svc.addEventHandler("onChatEndedByChasitor", function (data) {
+                    console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                embedded_svc.addEventHandler("onChatEndedByAgent", function (data) {
+                    console.log("onChatEndedByAgent event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                embedded_svc.addEventHandler("onQueueUpdate", function (data) {
+                    console.log("onQueueUpdate event was fired. queuePosition was " + data.queuePosition);
+                    queued = data.queuePosition >= 0;
+                    switchBackground();
+                });
+                embedded_svc.addEventHandler("afterDestroy", function (data) {
+                    console.log("afterDestroy event was fired.");
+                    if (queued && !chatInitiated) window.location = webcaselink;
+                });
+                embedded_svc.addEventHandler("onHelpButtonClick", function (data) {
+                    console.log("onHelpButtonClick event was fired.");
+                    chatInitiated = false;
+                    queued = false;
+                });
+                embedded_svc.addEventHandler("onSettingsCallCompleted", function (data) {
+                    console.log("onSettingsCallCompleted event was fired. Agent availability status: " + data.isAgentAvailable ? "online" : "offline");
+                    if (data.isAgentAvailable) {
+                        switchBackground();
+                        embedded_svc.bootstrapEmbeddedService({
+                            baseCoreURL: 'https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs'
+                        });
+                    } else {
+                        window.location = 'https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs';
+                    }
+                });
         embedded_svc.settings.directToButtonRouting = function (prechatFormData) {
             //Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
             //Returns a valid button ID.   
