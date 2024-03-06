@@ -1,0 +1,175 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="LiveChat.index" %>
+<%@ Import Namespace="LiveChat.UI.Managers" %>
+<!DOCTYPE html>
+<html>
+    <head runat="server">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="<%= UiConfigurationManager.GetConfiguration("SalesForceLiveChat", "GBCssUrl") %>" />        
+        <link rel="stylesheet" href="Assets/css/int/livechat.css?v=20210803" />
+        <script src="../Assets/js/ext/jquery.min.js"></script>
+        <script src="../Assets/js/ext/browser-detect.js"></script>
+        <script type="text/javascript">
+            var webcaselink = window.location.origin + "<%= webcaseurl %>";
+            var chatInitiated = false;
+            var queued = false;
+            $.geturlParams = function (name) {
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                if (results == null) {
+                    return null;
+                }
+                else {
+                    return decodeURI(results[1]) || 0;
+                }
+            }
+            function errorRedirectionEnabled() {
+                return !$.geturlParams('disableErrorRedirect');
+            }
+            function errorRedirection(type) {
+                if (errorRedirectionEnabled) {
+                    window.location = webcaselink + "?err=" + type;
+                }
+            }
+            function loadResources(url, type, onload) {
+                var script = document.createElement('script');
+                script.setAttribute('src', url);
+                script.onerror = function () {
+                    errorRedirection(type);
+                };
+                script.onload = onload;
+                document.body.appendChild(script);
+            }
+            function switchBackground() {
+                setTimeout(function () {
+                    $("#pageLoading").fadeOut();
+                    $('body').addClass('with-background');
+                }, 3000);
+            }
+            function additionalScript() {
+                embedded_svc.addEventHandler("onChatEstablished", function (data) {
+                    console.log("onChatEstablished event was fired.");
+                    chatInitiated = true;
+                });
+                embedded_svc.addEventHandler("onChatConferenceEnded", function (data) {
+                    console.log("onChatConferenceEnded event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                embedded_svc.addEventHandler("onChatEndedByChasitor", function (data) {
+                    console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                embedded_svc.addEventHandler("onChatEndedByAgent", function (data) {
+                    console.log("onChatEndedByAgent event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                embedded_svc.addEventHandler("onQueueUpdate", function (data) {
+                    console.log("onQueueUpdate event was fired. queuePosition was " + data.queuePosition);
+                    queued = data.queuePosition >= 0;
+                    switchBackground();
+                });
+                embedded_svc.addEventHandler("afterDestroy", function (data) {
+                    console.log("afterDestroy event was fired.");
+                    if (queued && !chatInitiated) window.location = https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs'';
+                });
+                embedded_svc.addEventHandler("onHelpButtonClick", function (data) {
+                    console.log("onHelpButtonClick event was fired.");
+                    chatInitiated = false;
+                    queued = false;
+                });
+                embedded_svc.addEventHandler("onSettingsCallCompleted", function (data) {
+                    console.log("onSettingsCallCompleted event was fired. Agent availability status: " + data.isAgentAvailable ? "online" : "offline");
+                    if (data.isAgentAvailable) {
+                        switchBackground();
+                        embedded_svc.bootstrapEmbeddedService({
+                            baseCoreURL: 'https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs'
+                        });
+                    } else {
+                        window.location = 'https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs';
+                    }
+                });
+                embedded_svc.isMessageFromSalesforceDomain = function (a) {
+                    f = [".salesforce.com", ".force.com", ".sfdc.net", ".keepitsimple88.com", ".loljc.cc"];
+                    var e = function () {
+                        return window.$A && "function" === typeof window.$A.get && window.$A.get("$Site")
+                    }
+                    if (e() && a === document.domain)
+                        return !0;
+                    var b = function (a, b) {
+                        return -1 !== a.indexOf(b, a.length - b.length)
+                    };
+                    return f.some(function (d) {
+                        return b(a, d)
+                    });
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">
+                &times;
+            </span>
+            <span>
+                <%= Resources.Common.lbl_browsernotsupport %>
+            </span>
+        </div>
+        <div id="pageLoading">
+            <img id="loadingimg" src="../Assets/img/<%= logoculture %>-Banner.jpg" />
+            <div id="loadingpath">
+                <img id="funLogoCNY" src="../Assets/img/FUN88-<%= funlogo %>.svg" />
+                <img id="loadingLogo" src="../Assets/img/Asset.gif" />
+                <h2 style="color:#25A9E0;">
+                    <%= Resources.Common.lbl_loading %>
+                </h2>
+            </div>
+        </div>
+        <script type='text/javascript'>
+            var isCommonEmbeddedServiceUrlCompleted = false;
+            loadResources('<%= EmbeddedServiceUrl %>', 'EmbeddedServiceUrl', function () {
+                isCommonEmbeddedServiceUrlCompleted = true;
+            });
+            var isChatResourcesUrlCompleted = false;
+            loadResources('<%= ChatResourceUrl %>', 'ChatResourcesUrl', function () {
+                isChatResourcesUrlCompleted = true;
+            });
+            /* browser check */
+            var browser = new UAParser();
+            var browserName = browser.getBrowser().name.toLowerCase();
+            var browserVersion = parseInt(browser.getBrowser().major);
+            if ((browserName === "ie" && browserVersion < 11) ||
+                (browserName.indexOf("safari") >= 0 && browserVersion < 11) ||
+                !(browserName === "edge" || browserName === "chrome" || browserName === "firefox" || browserName === "ie" || browserName.indexOf("safari") >= 0)) {
+                $('.alert').show();
+            }
+            var membercode = $.geturlParams('CUSTOM!Username');
+            var language = "<%= language %>";
+            var brandmarket = "<%= brandmarket %>";
+            var matchStartDate = $.geturlParams('CUSTOM!MatchStartDate');        
+            var betslipID = $.geturlParams('CUSTOM!BetslipID');  
+            var nps = $.geturlParams('CUSTOM!NPS');
+            var intervalBlock = setInterval(function () {
+                if (isCommonEmbeddedServiceUrlCompleted && isChatResourcesUrlCompleted) {
+                    var initESW = makeinitESW();
+                    if (!window.embedded_svc) {
+                        loadResources('<%= BackupEmbeddedServiceUrl %>', 'BackupEmbeddedServiceUrl', function () {
+                            additionalScript();
+                            initESW(null, membercode, language, brandmarket, matchStartDate, betslipID, nps);
+                        });
+                    } else {
+                        additionalScript();
+                        initESW('https://service.force.com', membercode, language, brandmarket, matchStartDate, betslipID, nps);
+                    }
+                    (function (d) {
+                        var iframe = d.body.appendChild(d.createElement('iframe'));
+                        var doc = iframe.contentWindow.document;
+                        /* style the iframe with some CSS */
+                        iframe.style.cssText = "width:0; height:0; border:0; border:none";
+                        doc.open().write('<body onload="' +
+                            'var d = document;d.getElementsByTagName(\'head\')[0].' +
+                            'appendChild(d.createElement(\'script\')).src' +
+                            '=\'https:\/\/c.la2-c1-hnd.salesforceliveagent.com\/content\/g\/js/48.0\/chasitor.js\'">');
+                        doc.close(); /* iframe onload event happens */
+                    })(document);
+                    clearInterval(intervalBlock);
+                }
+            }, 1000);
+        </script>
+        <!-- SFDC Chat Code (need to be embeded into Brand Web) End -->
+    </body>
+</html>
