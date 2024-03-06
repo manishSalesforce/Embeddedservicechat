@@ -283,28 +283,9 @@
                 embedded_svc.addEventHandler("onHelpButtonClick", function (data) {
                     console.log("onHelpButtonClick event was fired.");
 			console.log("onSettingsCallCompleted event was fired. Agent availability status: " + data.isAgentAvailable ? "online" : "offline");
-                    if (data.isAgentAvailable) {
-                        switchBackground();
-                        embedded_svc.bootstrapEmbeddedService({
-                            baseCoreURL: 'https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs'
-                        });
-                    } else {
-                        window.location = 'https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs';
-                    }
-                    chatInitiated = false;
-                    queued = false;
+                   
                 });
-                embedded_svc.addEventHandler("onSettingsCallCompleted", function (data) {
-                    console.log("onSettingsCallCompleted event was fired. Agent availability status: " + data.isAgentAvailable ? "online" : "offline");
-                    if (data.isAgentAvailable) {
-                        switchBackground();
-                        embedded_svc.bootstrapEmbeddedService({
-                            baseCoreURL: 'https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs'
-                        });
-                    } else {
-                        window.location = 'https://blackberrystg.hihi2u.net/livechat/webcasefun88_chs';
-                    }
-                });
+                
         embedded_svc.settings.directToButtonRouting = function (prechatFormData) {
             //Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
             //Returns a valid button ID.   
