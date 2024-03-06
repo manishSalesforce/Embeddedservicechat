@@ -257,8 +257,9 @@
 	    
 	});
 	embedded_svc.addEventHandler("afterDestroy", function (data) {
-	    if (queued ) window.location = 'www.google.com';
-		console.log("afterDestroy event was fired."+queued);
+	    console.log("afterDestroy event was fired."+queued);
+		if (queued ) window.location = 'www.google.com';
+		
 	    
 	});
         embedded_svc.settings.defaultMinimizedText = onlineAgent; //(Defaults to Chat with an Expert)
