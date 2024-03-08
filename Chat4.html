@@ -301,7 +301,7 @@
                 return nonVipButton;
             }
         };
-	window.addEventListener("message", function(event) {
+	/*window.addEventListener("message", function(event) {
 	    console.log('messagew');
 		if (!JSON.stringify(event.data).includes("fallbackArrayValue")) {
 	           // Not the expected message: reject message!
@@ -315,9 +315,9 @@
 		console.log('fallbackArray+'+fallbackArray);
 	    //since fallback routing only accepts array, hence wrapping the string inside square bracket
 	        embedded_svc.settings.fallbackRouting = [fallbackArray]; 
-            });
+            });*/
         //Sets the auto-population of pre-chat form fields
-       // embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+        embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
         //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
 	embedded_svc.addEventHandler("onSettingsCallCompleted", function (data) {
 	    console.log("onSettingsCallCompleted event was fired. Agent availability status: " + data.isAgentAvailable ? "online1" : "offline");
