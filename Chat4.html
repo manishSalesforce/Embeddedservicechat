@@ -311,8 +311,8 @@
 	        var fallbackArray = JSON.stringify(event.data).split('#');
 	        
 	     //To remove extra quotes(") from the end of string
-	        fallbackArray = fallbackArray[1].substring(0, fallbackArray[1].length - 1)
-	
+	        fallbackArray = fallbackArray[1].substring(0, fallbackArray[1].length - 1);
+		console.log('fallbackArray+'+fallbackArray);
 	    //since fallback routing only accepts array, hence wrapping the string inside square bracket
 	        embedded_svc.settings.fallbackRouting = [fallbackArray]; 
             });
