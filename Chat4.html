@@ -301,7 +301,7 @@
                 return nonVipButton;
             }
         };
-	window.addEventListener("message", function(event) {
+	/*window.addEventListener("message", function(event) {
 	    console.log('messagew');
 		if (!JSON.stringify(event.data).includes("fallbackArrayValue")) {
 	           // Not the expected message: reject message!
@@ -315,7 +315,7 @@
 		console.log('fallbackArray+'+fallbackArray);
 	    //since fallback routing only accepts array, hence wrapping the string inside square bracket
 	        embedded_svc.settings.fallbackRouting = [fallbackArray]; 
-            });
+            });*/
         //Sets the auto-population of pre-chat form fields
        // embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
         //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
@@ -325,6 +325,20 @@
 	});
 	embedded_svc.addEventHandler("onAvailability", function(data) {
 	    console.log("onAvailability event was fired. Agent availability status is " + data.isAgentAvailable ? "online2": "offline");
+		window.addEventListener("message", function(event) {
+	    console.log('messagew');
+		if (!JSON.stringify(event.data).includes("fallbackArrayValue")) {
+	           // Not the expected message: reject message!
+	            return;
+	       }
+	       console.log('event.origin:'+ event.origin + '***event.data: '+JSON.stringify(event.data));
+	        var fallbackArray = JSON.stringify(event.data).split('#');
+	        
+	     //To remove extra quotes(") from the end of string
+	        fallbackArray = fallbackArray[1].substring(0, fallbackArray[1].length - 1);
+		console.log('fallbackArray+'+fallbackArray);
+	    //since fallback routing only accepts array, hence wrapping the string inside square bracket
+	        embedded_svc.settings.fallbackRouting = [fallbackArray];
 	});
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
