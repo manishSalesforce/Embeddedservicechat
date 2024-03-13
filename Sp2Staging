@@ -71,6 +71,8 @@
 	language  = 'zh';
 	matchstartdate = '2024-02-22 16:00:00';
 	betslipid = '2402220108577076';
+	var chatInitiated = false;
+        var queued = false;
         var buttonID = '';
         var agentName = '';
         var onlineAgent = '';
@@ -305,7 +307,21 @@
         //Sets the auto-population of pre-chat form fields
         embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
         //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
-
+	embedded_svc.addEventHandler("onChatEstablished", function (data) {
+	    console.log("onChatEstablished event was fired.");
+	    chatInitiated = true;
+	});
+	embedded_svc.addEventHandler("onChatEndedByChasitor", function (data) {
+	    console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+	});
+	embedded_svc.addEventHandler("onQueueUpdate", function (data) {
+	    console.log("onQueueUpdate event was fired. queuePosition was " + data.queuePosition);
+	    queued = data.queuePosition >= 0;
+	});
+	embedded_svc.addEventHandler("afterDestroy", function (data) {
+	    console.log("afterDestroy event was fired.");
+	    if (queued && !chatInitiated) window.location = 'www.google.com';
+	});
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
 
