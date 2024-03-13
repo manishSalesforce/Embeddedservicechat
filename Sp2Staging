@@ -313,17 +313,14 @@
 	});
 	embedded_svc.addEventHandler("onChatEndedByChasitor", function (data) {
 	    console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+		console.log("afterDestroy event was fired."+queued);
+		console.log("afterDestroy event was fired."+chatInitiated);
 	});
 	embedded_svc.addEventHandler("onQueueUpdate", function (data) {
 	    console.log("onQueueUpdate event was fired. queuePosition was " + data.queuePosition);
 	    queued = data.queuePosition >= 0;
 	});
-	embedded_svc.addEventHandler("afterDestroy", function (data) {
-	    	console.log("afterDestroy event was fired."+queued);
-		console.log("afterDestroy event was fired."+chatInitiated);
-		console.log("afterDestroy event was fired.");
-	    
-	});
+	
 	embedded_svc.addEventHandler("onHelpButtonClick", function (data) {
 	    console.log("onHelpButtonClick event was fired.");
 	    chatInitiated = false;
