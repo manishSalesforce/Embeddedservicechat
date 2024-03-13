@@ -322,6 +322,11 @@
 	    console.log("afterDestroy event was fired.");
 	    if (queued && !chatInitiated) window.location = 'www.google.com';
 	});
+	embedded_svc.addEventHandler("onHelpButtonClick", function (data) {
+	    console.log("onHelpButtonClick event was fired.");
+	    chatInitiated = false;
+	    queued = false;
+	});
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
 
