@@ -282,8 +282,9 @@
             } else {
                 console.log("Cannot find a button - not supported Lang or Brand market");
             }
+		console.log('buttonID++'+buttonID);
             return buttonID;
-
+	
             function isValidBrandMarket() {
                 return ['FUN88-CNY', 'FUN88-THB', 'FUN88-IDR', 'FUN88-VND'].indexOf(preChatFormBrandmarket) > -1;
             }
