@@ -319,8 +319,10 @@
 	    queued = data.queuePosition >= 0;
 	});
 	embedded_svc.addEventHandler("afterDestroy", function (data) {
-	    console.log("afterDestroy event was fired.");
-	    if (queued && !chatInitiated) window.location = 'www.google.com';
+	    	console.log("afterDestroy event was fired."+queued);
+		console.log("afterDestroy event was fired."+chatInitiated);
+		console.log("afterDestroy event was fired.");
+	    
 	});
 	embedded_svc.addEventHandler("onHelpButtonClick", function (data) {
 	    console.log("onHelpButtonClick event was fired.");
