@@ -79,7 +79,7 @@
         var loading = '';
         var enNonVipButton = "5732v000000ceen";
         var enVipButton = "5732v000000ceeo";
-        var cnNonVipButton = "732v000000ceel";
+        var cnNonVipButton = "5732v000000ceel";
         var cnVipButton = "5732v000000ceem";
         var thNonVipButton = "5732v000000ceer";
         var thVipButton = "5732v000000cees";
