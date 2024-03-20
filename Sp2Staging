@@ -6,9 +6,14 @@
         .embeddedServiceHelpButton .helpButton .uiButton:focus {
             outline: 1px solid #005290;
         }
-	.embeddedServiceLiveAgentStateChatMenuMessage .rich-menu {
-	    margin: 0 0 0 auto !important;
+	agent.chat-content[c-lwcchatpack_lwcchatpack] {
+	    color: #000000;
+	    text-align: left;
+	    background: #F2F2F3;
+	    border-radius: 10px 10px 10px 0;
+	    float: left;
 	}
+	
         .chat-content {
             position: relative;
             font-weight: 400;
