@@ -59,6 +59,11 @@
 	    text-align: left;
 	  
 	}
+.agent.chat-content[c-lwcchatpack_lwcchatpack] {
+    color: #000000;
+    text-align: -webkit-left !important;
+   
+}
     </style>
 <script>
     window.addEventListener("message", receiveMessage, false);
