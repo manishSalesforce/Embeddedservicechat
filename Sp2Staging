@@ -9,9 +9,6 @@
 	agent.chat-content[c-lwcchatpack_lwcchatpack] {
 	    color: #000000;
 	    text-align: left !importan;
-	    background: #F2F2F3;
-	    border-radius: 10px 10px 10px 0;
-	    float: left;
 	}
 	
         .chat-content {
