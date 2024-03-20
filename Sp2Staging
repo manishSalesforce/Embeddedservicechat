@@ -55,10 +55,7 @@
       display:flex;
       margin:0px 0.25rem;
     }
-	.agent.chat-content {
-	    text-align: left;
-	  
-	}
+
 .agent.chat-content[c-lwcchatpack_lwcchatpack] {
     color: #000000;
     text-align: -webkit-left !important;
