@@ -8,7 +8,7 @@
         }
 	agent.chat-content[c-lwcchatpack_lwcchatpack] {
 	    color: #000000;
-	    text-align: left !importan;
+	    text-align: left !important;
 	}
 	
         .chat-content {
