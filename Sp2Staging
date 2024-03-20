@@ -6,6 +6,9 @@
         .embeddedServiceHelpButton .helpButton .uiButton:focus {
             outline: 1px solid #005290;
         }
+	.embeddedServiceLiveAgentStateChatMenuMessage .rich-menu {
+	    margin: 0 0 0 auto !important;
+	}
         .chat-content {
             position: relative;
             font-weight: 400;
