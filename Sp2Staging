@@ -82,7 +82,7 @@
 	language  = 'zh';
 	matchstartdate = '2024-02-22 16:00:00';
 	betslipid = '2402220108577076';
-	membercode = 'lsrmb001'
+	membercode = 'testspysqa3'
 	var chatInitiated = false;
         var queued = false;
         var buttonID = '';
