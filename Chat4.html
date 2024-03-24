@@ -63,13 +63,14 @@
     </script>
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
-	var initESW = function (gslbBaseURL, membercode, language, brandmarket, matchstartdate, betslipid, nps) {
+	var initESW = function (gslbBaseURL, membercode, language, brandmarket, matchstartdate, betslipid, nps, HandshakeToken) {
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.language = language; //For example, enter 'en' or 'en-US'
         embedded_svc.settings.waitingStateBackgroundImgURL = '';
 	brandmarket = 'FUN88-CNY';
 	language  = 'zh';
 	matchstartdate = '2024-02-22 16:00:00';
+	HandshakeToken = 'CfDJ8JR_jNzEefZFrh92Q0_SCK888ra6b_6hbOzAbVA_e3sY9oWcAWGe0Fddjw8JfQNqdlNZF5kowskU6PzlFRzV40nlCDv6Y7oXjy2ZoGQtrokztn2D-JrDq5PfNS16NBuwN8YDobYeX2aov2XROlRWTWal81LLicMsBiuyLeai36oMXV6ipj-swYPEWf-1fPuLtw';
 	betslipid = '2402220108577076';
         var buttonID = '';
         var agentName = '';
@@ -153,7 +154,8 @@
         embedded_svc.settings.prepopulatedPrechatFields = {
             Member_Code__c: membercode,
             Department: brandmarket,
-	Language: language
+	    Language: language,
+            Handshake_Token__c:HandshakeToken
         };
 
         embedded_svc.settings.extraPrechatFormDetails = [{
@@ -184,6 +186,12 @@
                "value": nps,
                "displayToAgent": true,
                "transcriptFields": ["Nps_Requires__c"]
+            },
+	{
+               "label": "Handshake Token",
+               "value": HandshakeToken,
+               "displayToAgent": true,
+               "transcriptFields": ["Handshake_Token__c"]
             }
         ];
 
@@ -340,6 +348,6 @@
 		};
 		document.body.appendChild(s);
 	} else {
-		initESW('https://service.force.com', '1234','zh','FUN88-CNY','test','test','test');
+		initESW('https://service.force.com', '1234','zh','FUN88-CNY','test','test','test','testToken');
 	}
 </script>
